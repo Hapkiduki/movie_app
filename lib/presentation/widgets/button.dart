@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:movie_app/common/constants/size_constants.dart';
+import 'package:movie_app/common/extensions/string_extensions.dart';
+import 'package:movie_app/common/extensions/size_extensions.dart';
+import 'package:movie_app/presentation/themes/theme_color.dart';
+
+class Button extends StatelessWidget {
+  final String text;
+  final Function? onPressed;
+  final bool isEnabled;
+
+  const Button({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.isEnabled = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeIn,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isEnabled
+              ? [AppColor.royalBlue, AppColor.violet]
+              : [Colors.grey, Colors.grey],
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(Sizes.dimen_20.w as double),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w as double),
+      margin: EdgeInsets.symmetric(vertical: Sizes.dimen_10.h as double),
+      height: Sizes.dimen_16.h as double?,
+      child: FlatButton(
+        onPressed: isEnabled ? onPressed as void Function()? : null,
+        child: Text(
+          text.t(context)!,
+          style: Theme.of(context).textTheme.button,
+        ),
+      ),
+    );
+  }
+}
